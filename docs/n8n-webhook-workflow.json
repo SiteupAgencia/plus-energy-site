@@ -1,0 +1,202 @@
+{
+  "name": "Plus Energy - Webhook Formulários",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "1b025975-7069-402a-adb9-341e9de3e7d5",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-0001-0001-000000000001",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [250, 300],
+      "webhookId": "1b025975-7069-402a-adb9-341e9de3e7d5"
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.body.source }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "website-popup",
+              "output": 0
+            },
+            {
+              "value2": "website-contato",
+              "output": 1
+            },
+            {
+              "value2": "website-newsletter",
+              "output": 2
+            }
+          ]
+        }
+      },
+      "id": "a1b2c3d4-0002-0002-0002-000000000002",
+      "name": "Switch Formulário",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "nome",
+              "value": "={{ $json.body.name }}"
+            },
+            {
+              "name": "telefone",
+              "value": "={{ $json.body.phone }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.body.email }}"
+            },
+            {
+              "name": "distribuidora",
+              "value": "={{ $json.body.distributor }}"
+            },
+            {
+              "name": "origem",
+              "value": "Popup do Site"
+            },
+            {
+              "name": "data",
+              "value": "={{ $json.body.timestamp }}"
+            }
+          ],
+          "number": [
+            {
+              "name": "valor_conta",
+              "value": "={{ $json.body.billValue }}"
+            },
+            {
+              "name": "desconto_estimado",
+              "value": "={{ $json.body.estimatedDiscount }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0003-0003-0003-000000000003",
+      "name": "Set Lead Popup",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [740, 160]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "nome",
+              "value": "={{ $json.body.name }}"
+            },
+            {
+              "name": "telefone",
+              "value": "={{ $json.body.phone }}"
+            },
+            {
+              "name": "mensagem",
+              "value": "={{ $json.body.message }}"
+            },
+            {
+              "name": "origem",
+              "value": "Formulário de Contato"
+            },
+            {
+              "name": "data",
+              "value": "={{ $json.body.timestamp }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0004-0004-0004-000000000004",
+      "name": "Set Contato",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [740, 300]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "email",
+              "value": "={{ $json.body.email }}"
+            },
+            {
+              "name": "origem",
+              "value": "Newsletter"
+            },
+            {
+              "name": "data",
+              "value": "={{ $json.body.timestamp }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0005-0005-0005-000000000005",
+      "name": "Set Newsletter",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [740, 440]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Switch Formulário",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Formulário": {
+      "main": [
+        [
+          {
+            "node": "Set Lead Popup",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set Contato",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set Newsletter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1
+}
