@@ -230,10 +230,10 @@ export function PostContent({ post, relatedPosts }: PostContentProps) {
           <Share2 className="w-4 h-4 text-pe-slate-400" />
           <span className="text-sm font-semibold text-pe-slate-500">Compartilhar:</span>
           {[
-            { label: "WhatsApp", href: `https://wa.me/?text=${encodeURIComponent(post.title + " " + `https://plusenergy.com.br/blog/${post.slug}`)}` },
-            { label: "Facebook", href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://plusenergy.com.br/blog/${post.slug}`)}` },
-            { label: "X", href: `https://x.com/intent/tweet?url=${encodeURIComponent(`https://plusenergy.com.br/blog/${post.slug}`)}&text=${encodeURIComponent(post.title)}` },
-            { label: "LinkedIn", href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://plusenergy.com.br/blog/${post.slug}`)}` },
+            { label: "WhatsApp", href: `https://wa.me/?text=${encodeURIComponent(post.title + " " + `https://plusenergy.net.br/blog/${post.slug}`)}` },
+            { label: "Facebook", href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://plusenergy.net.br/blog/${post.slug}`)}` },
+            { label: "X", href: `https://x.com/intent/tweet?url=${encodeURIComponent(`https://plusenergy.net.br/blog/${post.slug}`)}&text=${encodeURIComponent(post.title)}` },
+            { label: "LinkedIn", href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://plusenergy.net.br/blog/${post.slug}`)}` },
           ].map(({ label, href }) => (
             <a
               key={label}

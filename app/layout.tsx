@@ -23,7 +23,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://plusenergy.com.br"),
+  metadataBase: new URL("https://plusenergy.net.br"),
   title: {
     default: "Plus Energy — Energia Solar por Assinatura | Até 25% de Desconto",
     template: "%s | Plus Energy",

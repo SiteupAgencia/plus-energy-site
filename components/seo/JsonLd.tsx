@@ -13,7 +13,7 @@ interface JsonLdProps {
   type: SchemaType;
 }
 
-const BASE_URL = "https://plusenergy.com.br";
+const BASE_URL = "https://plusenergy.net.br";
 
 export function JsonLd({ type }: JsonLdProps) {
   const schemas: Record<SchemaType, object> = {

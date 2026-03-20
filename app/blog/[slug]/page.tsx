@@ -41,13 +41,13 @@ export default async function BlogPostPage({ params }: PageProps) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "@id": `https://plusenergy.com.br/blog/${slug}`,
+    "@id": `https://plusenergy.net.br/blog/${slug}`,
     headline: post.title,
     description: post.excerpt,
     image: post.cover_url
       ? { "@type": "ImageObject", url: post.cover_url, width: 1200, height: 630 }
       : undefined,
-    url: `https://plusenergy.com.br/blog/${slug}`,
+    url: `https://plusenergy.net.br/blog/${slug}`,
     inLanguage: "pt-BR",
     articleSection: post.category,
     keywords: post.tags?.join(", "),
@@ -57,25 +57,25 @@ export default async function BlogPostPage({ params }: PageProps) {
     author: {
       "@type": "Organization",
       name: "Plus Energy",
-      url: "https://plusenergy.com.br",
+      url: "https://plusenergy.net.br",
     },
     publisher: {
       "@type": "Organization",
       name: "Plus Energy",
       logo: {
         "@type": "ImageObject",
-        url: "https://plusenergy.com.br/logo.svg",
+        url: "https://plusenergy.net.br/logo.svg",
         width: 300,
         height: 100,
       },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://plusenergy.com.br/blog/${slug}`,
+      "@id": `https://plusenergy.net.br/blog/${slug}`,
     },
     isPartOf: {
       "@type": "WebSite",
-      "@id": "https://plusenergy.com.br/#website",
+      "@id": "https://plusenergy.net.br/#website",
     },
   };
 
@@ -84,9 +84,9 @@ export default async function BlogPostPage({ params }: PageProps) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://plusenergy.com.br" },
-      { "@type": "ListItem", position: 2, name: "Blog", item: "https://plusenergy.com.br/blog" },
-      { "@type": "ListItem", position: 3, name: post.title, item: `https://plusenergy.com.br/blog/${slug}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://plusenergy.net.br" },
+      { "@type": "ListItem", position: 2, name: "Blog", item: "https://plusenergy.net.br/blog" },
+      { "@type": "ListItem", position: 3, name: post.title, item: `https://plusenergy.net.br/blog/${slug}` },
     ],
   };
 
