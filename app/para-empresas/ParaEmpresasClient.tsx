@@ -139,7 +139,7 @@ const staggerContainer = {
 
 export function ParaEmpresasClient() {
   return (
-    <>
+    <main className="bg-white overflow-x-hidden">
       {/* ═══ HERO ═══ */}
       <section className="relative bg-pe-green-950 pt-36 pb-24 px-4 overflow-hidden">
         {/* Background image */}
@@ -249,7 +249,7 @@ export function ParaEmpresasClient() {
       </section>
 
       {/* ═══ SEGMENTOS ═══ */}
-      <section className="bg-pe-slate-50 py-24 px-4">
+      <section className="bg-pe-slate-50 py-24 px-4 overflow-hidden">
         <div className="max-w-5xl mx-auto">
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
@@ -264,18 +264,18 @@ export function ParaEmpresasClient() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-2 sm:grid-cols-3 gap-4"
+            className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4"
           >
             {segments.map(({ icon: Icon, label }) => (
               <motion.div
                 key={label}
                 variants={fadeUp}
-                className="flex items-center gap-3 bg-white rounded-2xl border border-pe-slate-100 p-5 hover:border-pe-solar-300 hover:shadow-sm transition-all"
+                className="flex items-center gap-2.5 sm:gap-3 bg-white rounded-2xl border border-pe-slate-100 p-4 sm:p-5 hover:border-pe-solar-300 hover:shadow-sm transition-all min-w-0"
               >
-                <div className="w-10 h-10 rounded-xl bg-pe-green-50 border border-pe-green-100 flex items-center justify-center shrink-0">
-                  <Icon className="w-5 h-5 text-pe-green-600" />
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-pe-green-50 border border-pe-green-100 flex items-center justify-center shrink-0">
+                  <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-pe-green-600" />
                 </div>
-                <span className="font-heading font-semibold text-black text-sm">{label}</span>
+                <span className="font-heading font-semibold text-black text-xs sm:text-sm leading-tight">{label}</span>
               </motion.div>
             ))}
           </motion.div>
@@ -459,20 +459,13 @@ export function ParaEmpresasClient() {
       </section>
 
       {/* ═══ CTA FINAL ═══ */}
-      <section className="py-24 px-4 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="max-w-2xl mx-auto"
-        >
-          <h2 className="font-heading text-3xl font-extrabold text-black mb-4">
-            Pronto para reduzir custos?
-          </h2>
-          <p className="text-pe-slate-500 mb-8">Simulação gratuita · Sem compromisso · 100% digital</p>
-          <LeadCta label="Quero desconto na conta CNPJ" />
-        </motion.div>
+      <section className="bg-pe-slate-50 py-24 px-4 text-center">
+        <h2 className="font-heading text-3xl font-extrabold text-black mb-4">
+          Pronto para reduzir custos?
+        </h2>
+        <p className="text-pe-slate-500 mb-8">Simulação gratuita · Sem compromisso · 100% digital</p>
+        <LeadCta label="Quero desconto na conta CNPJ" />
       </section>
-    </>
+    </main>
   );
 }
