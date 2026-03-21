@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getBlogPost, getRelatedPosts } from "@/lib/supabase";
 import { PostContent } from "@/app/blog/[slug]/PostContent";
+import { injectInternalLinks } from "@/lib/internal-links";
 
 export const revalidate = 60;
 
@@ -36,6 +37,11 @@ export default async function BlogPostPage({ params }: PageProps) {
   if (!post) notFound();
 
   const relatedPosts = await getRelatedPosts(slug, post.category);
+
+  // Injetar links internos automaticamente no conteúdo
+  if (post.content) {
+    post.content = injectInternalLinks(post.content, slug);
+  }
 
   // JSON-LD structured data
   const jsonLd = {
