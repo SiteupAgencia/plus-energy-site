@@ -92,7 +92,7 @@ export function PostContent({ post, relatedPosts }: PostContentProps) {
   });
 
   return (
-    <article className="bg-white">
+    <article className="bg-white overflow-x-hidden">
       {/* Header */}
       <header className="bg-pe-green-950 pt-36 pb-16 px-4">
         <div className="max-w-3xl mx-auto">
@@ -218,7 +218,7 @@ export function PostContent({ post, relatedPosts }: PostContentProps) {
           {/* Content */}
           <div
             ref={contentRef}
-            className="prose prose-slate prose-lg max-w-3xl prose-headings:font-heading prose-headings:font-bold prose-a:text-pe-green-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-strong:text-black"
+            className="prose prose-slate prose-lg max-w-3xl prose-headings:font-heading prose-headings:font-bold prose-a:text-pe-green-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-strong:text-black prose-table:text-sm prose-td:py-2 prose-th:py-2 overflow-x-hidden [&_table]:block [&_table]:overflow-x-auto [&_table]:w-full"
             dangerouslySetInnerHTML={{ __html: contentWithCta }}
           />
         </div>
@@ -226,9 +226,11 @@ export function PostContent({ post, relatedPosts }: PostContentProps) {
 
       {/* Share buttons */}
       <div className="max-w-3xl mx-auto px-4 pb-8">
-        <div className="flex items-center gap-3 pt-6 border-t border-pe-slate-100">
-          <Share2 className="w-4 h-4 text-pe-slate-400" />
-          <span className="text-sm font-semibold text-pe-slate-500">Compartilhar:</span>
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-6 border-t border-pe-slate-100">
+          <div className="flex items-center gap-1.5 mr-1">
+            <Share2 className="w-3.5 h-3.5 text-pe-slate-400" />
+            <span className="text-xs font-semibold text-pe-slate-500">Compartilhar:</span>
+          </div>
           {[
             { label: "WhatsApp", href: `https://wa.me/?text=${encodeURIComponent(post.title + " " + `https://plusenergy.net.br/blog/${post.slug}`)}` },
             { label: "Facebook", href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://plusenergy.net.br/blog/${post.slug}`)}` },
@@ -240,7 +242,7 @@ export function PostContent({ post, relatedPosts }: PostContentProps) {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 rounded-full border border-pe-slate-200 text-xs font-medium text-pe-slate-500 hover:border-pe-solar-400 hover:text-pe-solar-600 transition-colors"
+              className="px-2.5 py-1 rounded-full border border-pe-slate-200 text-[11px] font-medium text-pe-slate-500 hover:border-pe-solar-400 hover:text-pe-solar-600 transition-colors"
             >
               {label}
             </a>
