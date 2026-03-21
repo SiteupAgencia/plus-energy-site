@@ -32,7 +32,7 @@ export function FinalCta() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="relative mx-auto max-w-2xl rounded-3xl overflow-hidden px-10 py-14 text-center shadow-[0_24px_80px_rgba(0,0,0,0.18)]"
+        className="relative mx-auto max-w-2xl rounded-3xl overflow-hidden px-5 sm:px-10 py-14 text-center shadow-[0_24px_80px_rgba(0,0,0,0.18)]"
         style={{
           background: "linear-gradient(145deg, #0a1a0a 0%, #0f2a0f 60%, #102000 100%)",
         }}
@@ -161,7 +161,7 @@ export function FinalCta() {
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
             transition={{ type: "spring", stiffness: 400, damping: 20 }}
-            className="group inline-flex items-center gap-4 whitespace-nowrap rounded-full gold-gradient pl-10 pr-2.5 py-2.5 text-lg font-heading font-bold text-pe-slate-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_6px_36px_rgb(212_122_0/0.5)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_8px_48px_rgb(230_169_0/0.7)] hover:brightness-105 animate-pulse-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pe-solar-400 focus-visible:ring-offset-2"
+            className="group inline-flex items-center gap-3 sm:gap-4 rounded-full gold-gradient pl-6 sm:pl-10 pr-2.5 py-2.5 text-base sm:text-lg font-heading font-bold text-pe-slate-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_6px_36px_rgb(212_122_0/0.5)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_8px_48px_rgb(230_169_0/0.7)] hover:brightness-105 animate-pulse-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pe-solar-400 focus-visible:ring-offset-2"
           >
             QUERO TER DESCONTO
             <span className="w-10 h-10 rounded-full bg-pe-slate-950/15 flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-110">

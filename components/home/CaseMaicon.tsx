@@ -15,43 +15,49 @@ function FeaturedCard({ c }: { c: Case }) {
       <div className="grid sm:grid-cols-2 h-full">
         {/* Left */}
         <div className="p-5 sm:p-7 bg-white">
-          <div className="flex flex-wrap items-center gap-3 mb-5">
+          {/* Avatar + name */}
+          <div className="flex items-center gap-3 mb-3">
             <Image src={c.image} alt={c.name} width={44} height={44} className="w-11 h-11 rounded-full border-2 border-pe-solar-300 shrink-0 object-cover" />
             <div className="min-w-0">
               <p className="font-heading font-bold text-black leading-tight">{c.name}</p>
               <p className="text-xs text-pe-slate-500 truncate">{c.company}</p>
             </div>
-            <span className="ml-auto inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-pe-slate-50 border border-pe-slate-100 text-[11px] text-pe-slate-500 whitespace-nowrap">
+          </div>
+          {/* Location */}
+          <div className="mb-5">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-pe-slate-50 border border-pe-slate-100 text-[11px] text-pe-slate-500 whitespace-nowrap">
               <MapPin className="w-2.5 h-2.5" />{c.location}
             </span>
           </div>
 
-          <div className="flex items-center gap-3 p-3.5 rounded-xl bg-pe-slate-50 mb-3.5">
-            <div>
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 p-3.5 rounded-xl bg-pe-slate-50 mb-3.5">
+            <div className="text-center">
               <p className="text-[10px] text-pe-slate-400 uppercase tracking-wide mb-0.5">Antes</p>
-              <p className="font-heading text-lg font-bold text-pe-slate-400 line-through">{formatCurrency(c.previousBill)}</p>
+              <p className="font-heading text-base sm:text-lg font-bold text-pe-slate-400 line-through">{formatCurrency(c.previousBill)}</p>
             </div>
-            <TrendingDown className="w-5 h-5 text-pe-solar-500 mx-auto shrink-0" />
-            <div className="text-right ml-auto">
+            <TrendingDown className="w-5 h-5 text-pe-solar-500 shrink-0" />
+            <div className="text-center">
               <p className="text-[10px] text-pe-green-600 uppercase tracking-wide mb-0.5 font-semibold">Agora</p>
-              <p className="font-heading text-lg font-bold text-pe-green-600">{formatCurrency(c.currentBill)}</p>
+              <p className="font-heading text-base sm:text-lg font-bold text-pe-green-600">{formatCurrency(c.currentBill)}</p>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-2.5 mb-4">
-            <div className="p-3 rounded-xl border border-pe-solar-200 bg-pe-solar-50">
+            <div className="p-3 rounded-xl border border-pe-solar-200 bg-pe-solar-50 text-center">
               <p className="text-[10px] text-pe-slate-500 uppercase tracking-wide mb-1">Por mês</p>
               <p className="font-heading text-lg font-bold text-pe-solar-600">{formatCurrency(c.monthlySavings)}</p>
             </div>
-            <div className="p-3 rounded-xl border border-pe-solar-300 bg-gradient-to-br from-pe-solar-50 to-pe-solar-100">
+            <div className="p-3 rounded-xl border border-pe-solar-300 bg-gradient-to-br from-pe-solar-50 to-pe-solar-100 text-center">
               <p className="text-[10px] text-pe-slate-500 uppercase tracking-wide mb-1">{c.months} meses</p>
               <p className="font-heading text-lg font-bold text-pe-solar-600">{formatCurrency(c.totalSavings)}</p>
             </div>
           </div>
 
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-pe-green-50 border border-pe-green-100 text-xs font-semibold text-pe-green-700">
-            {c.type} · {c.discountRate}% de desconto
-          </span>
+          <div className="text-center sm:text-left">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-pe-green-50 border border-pe-green-100 text-xs font-semibold text-pe-green-700">
+              {c.type} · {c.discountRate}% de desconto
+            </span>
+          </div>
         </div>
 
         {/* Right — testimonial */}
