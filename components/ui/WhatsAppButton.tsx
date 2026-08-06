@@ -1,11 +1,18 @@
 "use client";
 
-import { getWhatsAppUrl } from "@/lib/utils";
-import { COMPANY } from "@/lib/constants";
+import { useEffect } from "react";
+import { captureUtms } from "@/lib/whatsapp";
+import { useWhatsAppLink } from "@/lib/useWhatsAppLink";
 import { trackWhatsAppClick } from "@/lib/gtm";
 
 export function WhatsAppButton() {
-  const url = getWhatsAppUrl(COMPANY.whatsapp, COMPANY.whatsappMessage);
+  // Componente global: é o primeiro ponto client-side de toda página,
+  // então é aqui que as UTMs da campanha são guardadas pra sessão.
+  useEffect(() => {
+    captureUtms();
+  }, []);
+
+  const url = useWhatsAppLink({ origin: "site_float", segment: "pf" });
 
   return (
     <a

@@ -5,6 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Instagram, Facebook, Mail, Phone } from "lucide-react"
 import { COMPANY, NAV_LINKS } from "@/lib/constants"
+import { useWhatsAppLink } from "@/lib/useWhatsAppLink"
 
 const LEGAL_LINKS = [
   { label: "Política de Privacidade", href: "/politica-de-privacidade" },
@@ -80,6 +81,8 @@ function NewsletterForm() {
 }
 
 export function Footer() {
+  const footerWhatsAppUrl = useWhatsAppLink({ origin: "site_footer", segment: "pf" })
+
   return (
     <footer className="relative bg-pe-green-950 text-white overflow-hidden">
       {/* Gradient mesh */}
@@ -171,7 +174,7 @@ export function Footer() {
               <ul className="space-y-3">
                 <li>
                   <a
-                    href={`https://wa.me/${COMPANY.whatsapp}?text=${encodeURIComponent(COMPANY.whatsappMessage)}`}
+                    href={footerWhatsAppUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-sm text-pe-slate-400 hover:text-pe-solar-400 transition-colors"
