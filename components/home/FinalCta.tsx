@@ -1,7 +1,9 @@
 "use client";
 
-import { ArrowRight, Shield, Star, Zap } from "lucide-react";
+import { MessageCircle, Shield, Star, Zap } from "lucide-react";
 import { motion } from "framer-motion";
+import { useWhatsAppLink } from "@/lib/useWhatsAppLink";
+import { trackWhatsAppClick } from "@/lib/gtm";
 
 const AVATARS = [
   "https://i.pravatar.cc/150?img=12",
@@ -21,7 +23,11 @@ const SPARKLES = [
 ];
 
 export function FinalCta() {
-  const handleClick = () => {
+  // Última seção do site: o destino padrão é o WhatsApp oficial.
+  // O formulário continua disponível, mas como rota secundária.
+  const whatsappUrl = useWhatsAppLink({ origin: "site_final_cta", segment: "pf" });
+
+  const openForm = () => {
     window.dispatchEvent(new CustomEvent("open-lead-popup"));
   };
 
@@ -155,19 +161,32 @@ export function FinalCta() {
           transition={{ duration: 0.5, delay: 0.35 }}
           className="relative"
         >
-          <motion.button
-            type="button"
-            onClick={handleClick}
+          <motion.a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackWhatsAppClick("final_cta")}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
             transition={{ type: "spring", stiffness: 400, damping: 20 }}
             className="group inline-flex items-center gap-3 sm:gap-4 rounded-full gold-gradient pl-6 sm:pl-10 pr-2.5 py-2.5 text-base sm:text-lg font-heading font-bold text-pe-slate-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_6px_36px_rgb(212_122_0/0.5)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_8px_48px_rgb(230_169_0/0.7)] hover:brightness-105 animate-pulse-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pe-solar-400 focus-visible:ring-offset-2"
           >
-            QUERO TER DESCONTO
+            FALAR NO WHATSAPP
             <span className="w-10 h-10 rounded-full bg-pe-slate-950/15 flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-110">
-              <ArrowRight className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-0.5" />
+              <MessageCircle className="w-5 h-5" />
             </span>
-          </motion.button>
+          </motion.a>
+
+          <p className="mt-4 text-white/40 text-sm">
+            Resposta no mesmo dia &bull; sem compromisso &bull;{" "}
+            <button
+              type="button"
+              onClick={openForm}
+              className="text-white/70 underline underline-offset-2 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pe-solar-400 rounded"
+            >
+              prefiro simular pelo site
+            </button>
+          </p>
         </motion.div>
 
         {/* Guarantee badge */}

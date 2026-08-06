@@ -4,6 +4,7 @@ import { Sora, DM_Sans } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { LeadPopup } from "@/components/lead/LeadPopup";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import "./globals.css";
 
 const GTM_ID = "GTM-PDW865DV";
@@ -102,6 +103,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <main className="flex-1">{children}</main>
         <Footer />
         <LeadPopup />
+        <WhatsAppButton />
       </body>
     </html>
   );
