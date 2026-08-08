@@ -7,10 +7,11 @@ import { BillSlider } from "./BillSlider";
 import { DiscountDisplay } from "./DiscountDisplay";
 import { LeadForm } from "./LeadForm";
 import { SuccessScreen } from "./SuccessScreen";
-import { DEFAULT_BILL, COMPANY } from "@/lib/constants";
+import { NotEligibleScreen } from "./NotEligibleScreen";
+import { DEFAULT_BILL, MIN_QUALIFIED_BILL, COMPANY } from "@/lib/constants";
 import { trackPopupOpen, trackPopupClose, trackLeadStep, trackLeadSubmit, trackLeadSuccess } from "@/lib/gtm";
 
-type Step = "slider" | "discount" | "distributor" | "form" | "success";
+type Step = "slider" | "discount" | "distributor" | "form" | "success" | "not_eligible";
 
 const DISTRIBUTORS = [
   { value: "rge", label: "RGE (Rio Grande Energia)" },
@@ -31,9 +32,10 @@ export function LeadPopup() {
       const customEvent = e as CustomEvent;
       const source = customEvent.detail?.source || "cta";
       if (customEvent.detail?.billValue) {
-        setBillValue(customEvent.detail.billValue);
-        setStep("discount");
-        trackPopupOpen(source, customEvent.detail.billValue);
+        const value = customEvent.detail.billValue;
+        setBillValue(value);
+        setStep(value < MIN_QUALIFIED_BILL ? "not_eligible" : "discount");
+        trackPopupOpen(source, value);
       } else {
         setStep("slider");
         trackPopupOpen(source);
@@ -83,8 +85,19 @@ export function LeadPopup() {
     const currentIndex = order.indexOf(step);
     if (currentIndex > 0) {
       setStep(order[currentIndex - 1]);
+    } else if (step === "not_eligible") {
+      setStep("slider");
     }
   }, [step]);
+
+  const handleSliderContinue = useCallback(() => {
+    if (billValue < MIN_QUALIFIED_BILL) {
+      trackLeadStep("not_eligible", billValue);
+      setStep("not_eligible");
+      return;
+    }
+    goNext();
+  }, [billValue, goNext]);
 
   const handleSubmit = useCallback(
     async (data: { name: string; phone: string; email: string }) => {
@@ -125,6 +138,7 @@ export function LeadPopup() {
     distributor: "Qual sua distribuidora?",
     form: "Garanta seu desconto",
     success: "",
+    not_eligible: "",
   };
 
   const stepNumber = ["slider", "discount", "distributor", "form"].indexOf(step) + 1;
@@ -153,7 +167,7 @@ export function LeadPopup() {
             className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
           >
             {/* Header */}
-            {step !== "success" && (
+            {step !== "success" && step !== "not_eligible" && (
               <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-sm border-b border-pe-slate-100 px-6 py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -206,7 +220,7 @@ export function LeadPopup() {
                   >
                     <BillSlider value={billValue} onChange={setBillValue} showDetails={false} />
                     <button
-                      onClick={goNext}
+                      onClick={handleSliderContinue}
                       className="w-full mt-6 py-3.5 px-6 bg-primary hover:bg-primary-hover text-primary-foreground font-heading font-bold rounded-xl transition-all active:scale-[0.97] flex items-center justify-center gap-2"
                     >
                       Ver minha economia
@@ -323,6 +337,18 @@ export function LeadPopup() {
                       name={leadName}
                       onClose={close}
                     />
+                  </motion.div>
+                )}
+
+                {step === "not_eligible" && (
+                  <motion.div
+                    key="not_eligible"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <NotEligibleScreen onClose={close} />
                   </motion.div>
                 )}
               </AnimatePresence>

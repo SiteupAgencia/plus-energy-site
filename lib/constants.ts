@@ -20,6 +20,9 @@ export const DISCOUNT_RATE = 0.25; // 25%
 export const MIN_BILL = 350;
 export const MAX_BILL = 5000;
 export const DEFAULT_BILL = 500;
+// Mesmo corte do formulário nativo do Meta ("Até R$400" é a faixa que não segue).
+// Abaixo disso o funil do site não chega ao WhatsApp — decisão de 2026-08-08.
+export const MIN_QUALIFIED_BILL = 400;
 
 // CO2 per kWh in Brazil (average)
 export const CO2_PER_KWH = 0.075; // kg
