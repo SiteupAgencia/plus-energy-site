@@ -24,7 +24,6 @@ export function LeadPopup() {
   const [billValue, setBillValue] = useState(DEFAULT_BILL);
   const [distributor, setDistributor] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
-  const [leadName, setLeadName] = useState("");
 
   // Listen for custom event to open popup
   useEffect(() => {
@@ -100,12 +99,11 @@ export function LeadPopup() {
   }, [billValue, goNext]);
 
   const handleSubmit = useCallback(
-    async (data: { name: string; phone: string; email: string }) => {
+    async (data: { phone: string }) => {
       setIsLoading(true);
-      setLeadName(data.name);
       const estimatedDiscount = billValue * 0.25;
 
-      trackLeadSubmit({ billValue, distributor, estimatedDiscount, name: data.name, phone: data.phone, email: data.email });
+      trackLeadSubmit({ billValue, distributor, estimatedDiscount, phone: data.phone });
 
       try {
         await fetch(COMPANY.webhookUrl, {
@@ -125,7 +123,7 @@ export function LeadPopup() {
         console.error("Failed to send lead data to webhook");
       }
 
-      trackLeadSuccess({ billValue, monthlySavings: estimatedDiscount, name: data.name, phone: data.phone, email: data.email });
+      trackLeadSuccess({ billValue, monthlySavings: estimatedDiscount, phone: data.phone });
       setIsLoading(false);
       setStep("success");
     },
@@ -318,7 +316,7 @@ export function LeadPopup() {
                     transition={{ duration: 0.2 }}
                   >
                     <p className="text-sm text-pe-slate-600 mb-4">
-                      Preencha seus dados e nossa equipe entrará em contato:
+                      Só o WhatsApp — o resto a gente combina na conversa:
                     </p>
                     <LeadForm onSubmit={handleSubmit} isLoading={isLoading} />
                   </motion.div>
@@ -334,7 +332,6 @@ export function LeadPopup() {
                   >
                     <SuccessScreen
                       billValue={billValue}
-                      name={leadName}
                       onClose={close}
                     />
                   </motion.div>

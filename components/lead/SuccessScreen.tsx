@@ -9,17 +9,15 @@ import { trackWhatsAppClick } from "@/lib/gtm";
 
 interface SuccessScreenProps {
   billValue: number;
-  name: string;
   onClose: () => void;
 }
 
-export function SuccessScreen({ billValue, name, onClose }: SuccessScreenProps) {
+export function SuccessScreen({ billValue, onClose }: SuccessScreenProps) {
   const savings = calculateSavings(billValue);
-  const firstName = name.split(" ")[0];
 
   // O lead é quem abre a conversa: janela de 24h sem custo de template,
-  // e a mensagem já chega com nome, faixa da conta e origem pro CRM.
-  const whatsappUrl = useWhatsAppLink({ origin: "form_to_wa", name, billValue });
+  // e a mensagem já chega com a faixa da conta e origem pro CRM.
+  const whatsappUrl = useWhatsAppLink({ origin: "form_to_wa", billValue });
 
   return (
     <motion.div
@@ -39,7 +37,7 @@ export function SuccessScreen({ billValue, name, onClose }: SuccessScreenProps) 
       </motion.div>
 
       <h3 className="text-2xl font-heading font-bold text-pe-slate-900 mb-2">
-        Pronto, {firstName}!
+        Pronto!
       </h3>
 
       <p className="text-pe-slate-600 mb-6 max-w-sm mx-auto">
