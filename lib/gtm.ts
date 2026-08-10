@@ -30,34 +30,26 @@ export function trackLeadSubmit(data: {
   billValue: number;
   distributor: string;
   estimatedDiscount: number;
-  name: string;
   phone: string;
-  email: string;
 }) {
   pushEvent("generate_lead", {
     currency: "BRL",
     value: data.estimatedDiscount,
     bill_value: data.billValue,
     distributor: data.distributor,
-    lead_name: data.name,
     lead_phone: data.phone,
-    lead_email: data.email,
   });
 }
 
 export function trackLeadSuccess(data: {
   billValue: number;
   monthlySavings: number;
-  name: string;
   phone: string;
-  email: string;
 }) {
   pushEvent("lead_conversion", {
     bill_value: data.billValue,
     monthly_savings: data.monthlySavings,
-    lead_name: data.name,
     lead_phone: data.phone,
-    lead_email: data.email,
   });
 }
 

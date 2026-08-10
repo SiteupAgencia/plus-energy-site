@@ -1,12 +1,10 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { User, Phone, Mail, Loader2 } from "lucide-react";
+import { Phone, Loader2 } from "lucide-react";
 
 interface LeadFormData {
-  name: string;
   phone: string;
-  email: string;
 }
 
 interface LeadFormProps {
@@ -22,69 +20,33 @@ function formatPhone(value: string): string {
 }
 
 export function LeadForm({ onSubmit, isLoading }: LeadFormProps) {
-  const [formData, setFormData] = useState<LeadFormData>({
-    name: "",
-    phone: "",
-    email: "",
-  });
-  const [errors, setErrors] = useState<Partial<LeadFormData>>({});
+  const [phone, setPhone] = useState("");
+  const [error, setError] = useState("");
 
-  const validate = useCallback((): boolean => {
-    const newErrors: Partial<LeadFormData> = {};
-    if (!formData.name.trim() || formData.name.trim().length < 3) {
-      newErrors.name = "Informe seu nome completo";
-    }
-    const phoneDigits = formData.phone.replace(/\D/g, "");
-    if (phoneDigits.length < 10) {
-      newErrors.phone = "Informe um telefone válido";
-    }
-    if (!formData.email.includes("@") || !formData.email.includes(".")) {
-      newErrors.email = "Informe um e-mail válido";
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  }, [formData]);
+  const handlePhoneChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(formatPhone(e.target.value));
+  }, []);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
-      if (!validate()) return;
-      await onSubmit(formData);
+      const digits = phone.replace(/\D/g, "");
+      if (digits.length < 10) {
+        setError("Informe um WhatsApp válido");
+        return;
+      }
+      setError("");
+      await onSubmit({ phone });
     },
-    [formData, validate, onSubmit]
+    [phone, onSubmit]
   );
-
-  const handlePhoneChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({ ...prev, phone: formatPhone(e.target.value) }));
-  }, []);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Name */}
-      <div>
-        <label htmlFor="lead-name" className="block text-sm font-medium text-pe-slate-700 mb-1">
-          Nome completo
-        </label>
-        <div className="relative">
-          <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-pe-slate-400" />
-          <input
-            id="lead-name"
-            type="text"
-            placeholder="Seu nome"
-            value={formData.name}
-            onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
-            className={`w-full pl-10 pr-4 py-3 rounded-xl border ${
-              errors.name ? "border-red-400 bg-red-50" : "border-pe-slate-200 bg-white"
-            } text-pe-slate-900 placeholder:text-pe-slate-400 focus:outline-none focus:ring-2 focus:ring-pe-green-500/30 focus:border-pe-green-500 transition`}
-          />
-        </div>
-        {errors.name && <p className="mt-1 text-xs text-red-500">{errors.name}</p>}
-      </div>
-
-      {/* Phone */}
+      {/* Phone / WhatsApp — único dado pedido: o resto (nome, contexto) rola na conversa */}
       <div>
         <label htmlFor="lead-phone" className="block text-sm font-medium text-pe-slate-700 mb-1">
-          Telefone (WhatsApp)
+          Seu WhatsApp
         </label>
         <div className="relative">
           <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-pe-slate-400" />
@@ -92,35 +54,15 @@ export function LeadForm({ onSubmit, isLoading }: LeadFormProps) {
             id="lead-phone"
             type="tel"
             placeholder="(00) 00000-0000"
-            value={formData.phone}
+            value={phone}
             onChange={handlePhoneChange}
+            autoFocus
             className={`w-full pl-10 pr-4 py-3 rounded-xl border ${
-              errors.phone ? "border-red-400 bg-red-50" : "border-pe-slate-200 bg-white"
+              error ? "border-red-400 bg-red-50" : "border-pe-slate-200 bg-white"
             } text-pe-slate-900 placeholder:text-pe-slate-400 focus:outline-none focus:ring-2 focus:ring-pe-green-500/30 focus:border-pe-green-500 transition`}
           />
         </div>
-        {errors.phone && <p className="mt-1 text-xs text-red-500">{errors.phone}</p>}
-      </div>
-
-      {/* Email */}
-      <div>
-        <label htmlFor="lead-email" className="block text-sm font-medium text-pe-slate-700 mb-1">
-          E-mail
-        </label>
-        <div className="relative">
-          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-pe-slate-400" />
-          <input
-            id="lead-email"
-            type="email"
-            placeholder="seu@email.com"
-            value={formData.email}
-            onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
-            className={`w-full pl-10 pr-4 py-3 rounded-xl border ${
-              errors.email ? "border-red-400 bg-red-50" : "border-pe-slate-200 bg-white"
-            } text-pe-slate-900 placeholder:text-pe-slate-400 focus:outline-none focus:ring-2 focus:ring-pe-green-500/30 focus:border-pe-green-500 transition`}
-          />
-        </div>
-        {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
+        {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
       </div>
 
       {/* Submit */}
